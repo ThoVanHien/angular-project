@@ -132,9 +132,77 @@
 
 ### 3. Directives:
 
-### 4. ng-template và ngTemplateOutlet:
+### 4. Template variable và ViewChild/ViewChildren
 
-### 5. Template referce variable:
+- Template variable:
+
+  - Instance của phần tử `DOM`:
+
+    ```html
+    <input #templateVariable type="text"></input>
+    ```
+
+    - <i>Type là HTMLElement</i>
+
+  - Instance của `component`:
+
+    ```html
+    <button (click)="chidComp.funcDoST()">Toggle</button>
+    <br />
+    <app-chid #chidComp></app-child>
+    ```
+
+    - <i>Type là component đó</i>
+
+  - Instance của `directive`:
+
+    ```html
+    <input [(ngModel)] = "value" #templateVariable="ngModel" type="text"></input>
+    <!-- Hoặc -->
+    <form #myForm="ngForm">
+      <!-- Form content here -->
+    </form>
+    ```
+
+    - <i>Type là directive đó. Nếu không có gán cho nó là loại directive nào thì nó chỉ là instance của DOM bình thường.</i>
+
+  - Instance của `ng-template`:
+
+    ```html
+    <div *ngIf="user.age >= 13; else noPG13">Bạn có thể xem nội dung PG-13</div>
+    <ng-template #noPG13>
+      <div>Bạn không thể xem nội dung PG-13</div>
+    </ng-template>
+    ```
+
+    - <i>Type là ng-template đó</i>
+
+- ViewChild/ViewChildren:
+  - Dùng để lấy instance của template variable ngoài template-view:
+    - Lấy instance của `component`:
+      ```typescript
+      @ViewChild('tên biến template') asValue: TypeComponent
+      ```
+    - Lấy instance của `DOM`:
+      ```typescript
+      @ViewChild('tên biến template') asValue: ElementRef<HTMLDivElement>
+      // Là ElementRef thay vì HTMLElement như bên ngoài template.
+      ```
+    - Lấy instance của `Directive` nhưng có option là `static` và `read`:
+      ```typescript
+        @ViewChild('tên biến template', {
+          read: ElementRef, // Thay vì lấy instance directive thì lấy instance DOM
+          static: true, // sử dụng ở ngOnInit, False: sử dụng ở ngAfterViewInit
+        }) asValue: ElementRef<HTMLFormElement>
+      ```
+    - Đối với ViewChildren:
+      ```typescript
+      @ViewChild('tên biến template') asValue: QueryList<TypeComponent>
+      ```
+
+### 5. ng-template và ngTemplateOutlet:
+
+### 6. Template referce variable:
 
 ## Services
 
