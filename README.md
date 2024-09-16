@@ -134,6 +134,7 @@
 
 ### 4. Template variable và ViewChild/ViewChildren
 
+- Link tham khảo: https://github.com/angular-vietnam/100-days-of-angular/blob/master/Day010-template-variable-viewchild-viewchildren.md
 - Template variable:
 
   - Instance của phần tử `DOM`:
@@ -178,7 +179,6 @@
     - <i>Type là ng-template đó</i>
 
 - ViewChild/ViewChildren:
-  - Link tham khảo: https://github.com/angular-vietnam/100-days-of-angular/blob/master/Day010-template-variable-viewchild-viewchildren.md
   - Dùng để lấy instance của template variable ngoài template-view:
     - Lấy instance của `component`:
       ```typescript
