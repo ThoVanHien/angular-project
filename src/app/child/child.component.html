@@ -1,0 +1,8 @@
+<div>
+  <h2>Child Component</h2>
+  <ng-content select="p"></ng-content>
+  <ng-content select=".class-name"></ng-content>
+  <ng-content select="[attribute]"></ng-content>
+  <!-- Đối với không có select hoặc trùng selector thì nó sẽ lấy hết-->
+  <ng-content></ng-content>
+</div>

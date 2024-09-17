@@ -100,7 +100,7 @@
     - Component con: phát ra sự kiện thông qua `EventEmitter`.
 
       ```typescript
-      @Output() notify: EventEmitter<string> = new EventEmitter<string>('');
+      @Output() notify: EventEmitter<string> = new EventEmitter<string>();
 
       //Thường kết hợp với event binding trong component con
       sendNotification() {
@@ -201,9 +201,83 @@
       @ViewChild('tên biến template') asValue: QueryList<TypeComponent>
       ```
 
-### 5. ng-template và ngTemplateOutlet:
+### 5. Content projection `ng-content`:
 
-### 6. Template referce variable:
+- `<ng-content></ng-content>` trong template của component con như một slot để giữ chổ cho nội dung truyền từ template của component cha thông qua `<child>Content</child>`.
+  ```html
+  <div>
+    <h2>Child Component</h2>
+    <ng-content></ng-content>
+    <!-- Vùng nội dung từ ParentComponent sẽ được chèn vào đây -->
+  </div>
+  ```
+- Trong template của component con có thể chứa nhiều `<ng-content></ng-content>`. Nhưng nó sẽ nhận theo thứ tự từ trên xuống.
+
+  ```html
+  <!-- Child template -->
+  <div>
+    <h2>Child Component</h2>
+    <ng-content></ng-content>
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Parent template -->
+  <app-child>
+    <p>Nội dung từ ParentComponent</p>
+    <p>Đây là dòng 2</p>
+  </app-child>
+
+  <!-- Child Component
+  Nội dung từ ParentComponent
+  Đây là dòng 2 -->
+  ```
+
+  - <i>Lưu ý: 2 dòng p trên là của ng-content thứ nhất. Như vậy nếu không có `select` thì chỉ có 1 slot</i>
+
+- Nếu muốn sử dụng nhiều `ng-content` thì nên sử dụng với `select`:
+
+  ```html
+  <!-- Child template -->
+  <div>
+    <h2>Child Component</h2>
+    <ng-content select="p"></ng-content>
+    <ng-content select=".class-name"></ng-content>
+    <ng-content select="[attribute]"></ng-content>
+    <!-- Đối với không có select hoặc trùng selector thì nó sẽ lấy hết-->
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Parent template -->
+  <app-child>
+    <p>Đây là tag selection</p>
+    <span class="class-name">Đây là class selection/span>
+    <div attribute>Đây là attribute selection</div>
+    <h1>Còn lại</h1>
+    <p>Thẻ này bị trùng với tag selection</p>
+  </app-child>
+
+  <!-- Đây là tag selection
+  Thẻ này bị trùng với tag selection
+  Đây là class selection
+  Đây là attribute selection
+  Còn lại -->
+
+  ```
+
+- `ngProjectAs` được dùng ở template của parent component. Nó được dùng để giả lập 1 selector của thẻ đó và giúp `ng-content` select nó dễ dàng, không cần thay đổi trực tiếp thuộc tính của phần tử.
+  ```html
+  <!-- Child template -->
+  <div>
+    <h2>Child Component</h2>
+    <ng-content select="[header]"></ng-content>
+  </div>
+  <!-- Parent template -->
+  <p ngProjectAs="[header]">Đây là nội dung header được project</p>
+  ```
+
+### 6. ng-template và ngTemplateOutlet:
+
+### 7. Template referce variable:
 
 ## Services
 
