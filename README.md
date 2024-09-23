@@ -277,7 +277,42 @@
 
 ### 6. ng-template và ngTemplateOutlet:
 
-### 7. Template referce variable:
+- `ng-template` thường được dùng thay cho việc tách nhỏ component ra do phần UI nhỏ.
+- `ng-template` không được render ra chỉ khi:
+
+  - `*ngif ... else templ`:
+    ```html
+    <div *ngIf="user.age >= 13; else noPG13">Bạn có thể xem nội dung PG-13</div>
+    <ng-template #noPG13>
+      <div>Bạn không thể xem nội dung PG-13</div>
+    </ng-template>
+    ```
+  - `ngTemplateOutlet`:
+    ```html
+    <ng-template #myTemplate>
+      <div>Nội dung được hiển thị thông qua ngTemplateOutlet!</div>
+    </ng-template>
+    <div [ngTemplateOutlet]="myTemplate"></div>
+    ```
+  - `ngTemplateOutletContext`: truyền dữ liệu vào `ng-template`:
+
+    ```html
+    <!-- Định nghĩa template với biến context -->
+    <ng-template #myTemplate let-name="name">
+      <div>Hello, {{ name }}!</div>
+    </ng-template>
+
+    <!-- 
+    - let-name: sử dụng name trong ng-template
+    - name: là từ ngTemplateOutletContext truyền vào. -->
+    <div [ngTemplateOutlet]="myTemplate" [ngTemplateOutletContext]="{ name: 'Angular' }"></div>
+    ```
+
+  - `ng-container`: khi render ra sẽ không có thẻ div nào bao quanh như ví dụ trên.
+
+    ```html
+    <ng-container [ngTemplateOutlet]="myTemplate" [ngTemplateOutletContext]="{ name: 'Angular' }"></ng-container>
+    ```
 
 ## Services
 
